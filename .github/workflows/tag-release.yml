@@ -97,11 +97,12 @@ jobs:
       run: |
         sudo apt-get -y update
         sudo apt-get install -y build-essential gcc-5 g++-5 libtool curl debconf-utils git git-core libio-stringy-perl liblua5.1 liblua5.1-dev libluabind-dev libmysql++ libperl-dev libperl5i-perl libmysqlclient-dev lua5.1 minizip make mariadb-client nano open-vm-tools unzip uuid-dev zlibc wget mariadb-client-10.1
-        wget http://ftp.us.debian.org/debian/pool/main/libs/libsodium/libsodium-dev_1.0.11-2_amd64.deb -O /home/eqemu/libsodium-dev.deb
-        wget http://ftp.us.debian.org/debian/pool/main/libs/libsodium/libsodium18_1.0.11-2_amd64.deb -O /home/eqemu/libsodium18.deb
-        dpkg -i /home/eqemu/libsodium*.deb
-        rm -f /home/eqemu/libsodium-dev.deb
-        rm -f /home/eqemu/libsodium18.deb
+        mkdir -p /tmp/
+        wget http://ftp.us.debian.org/debian/pool/main/libs/libsodium/libsodium-dev_1.0.11-2_amd64.deb -O /tmp/libsodium-dev.deb
+        wget http://ftp.us.debian.org/debian/pool/main/libs/libsodium/libsodium18_1.0.11-2_amd64.deb -O /tmp/libsodium18.deb
+        dpkg -i /tmp/libsodium*.deb
+        rm -f /tmp/libsodium-dev.deb
+        rm -f /tmp/libsodium18.deb
 
     - name: External dependencies
       id: get_deps
@@ -319,7 +320,7 @@ jobs:
         path: ./
     - id: set_upload_url
       run: |
-        upload_url=`cat ./upload_url`
+        upload_url=`cat ./upload_url``
         echo ::set-output name=upload_url::$upload_url
 
     - name: Upload to Release
